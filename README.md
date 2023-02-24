@@ -1,5 +1,5 @@
 # Azure Examples
 Terraform examples for Azure Infrastructure
 
-## Examples
-- [Azure VM Monitoring](./azure-vm-monitoring/README.md)
+## [Azure VM Monitoring](./azure-vm-monitoring/README.md)
+- ![img](./azure-vm-monitoring/docs/architecture.png)
