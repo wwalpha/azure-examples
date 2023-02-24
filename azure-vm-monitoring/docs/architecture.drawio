@@ -1,0 +1,58 @@
+<mxfile host="65bd71144e" scale="1" border="40">
+    <diagram id="5tnX2zfU0-9BE4T5Peca" name="Page-1">
+        <mxGraphModel dx="1338" dy="2034" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="7" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#007FFF;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="220" y="-420" width="770" height="430" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" style="edgeStyle=none;html=1;fontSize=20;strokeWidth=3;exitX=0.961;exitY=0.535;exitDx=0;exitDy=0;exitPerimeter=0;strokeColor=#FF0000;" parent="1" source="7" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="970" y="-193" as="sourcePoint"/>
+                        <mxPoint x="1120" y="-190" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="4" value="Private Endpoint" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=20;image=img/lib/azure2/networking/Private_Endpoint.svg;" parent="1" vertex="1">
+                    <mxGeometry x="850" y="-226" width="72" height="66" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="&amp;nbsp;VNET" style="aspect=fixed;html=1;points=[];align=left;image;fontSize=20;image=img/lib/azure2/networking/Virtual_Networks.svg;labelPosition=right;verticalLabelPosition=middle;verticalAlign=middle;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="-400" width="53.6" height="32" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="RHEL 8.6" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=20;image=img/lib/azure2/compute/Virtual_Machine.svg;" parent="1" vertex="1">
+                    <mxGeometry x="360" y="-320" width="69" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Windows Server 2016" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=20;image=img/lib/azure2/compute/Virtual_Machine.svg;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="-160" width="69" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Window Server 2012" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=20;image=img/lib/azure2/compute/Virtual_Machine.svg;" parent="1" vertex="1">
+                    <mxGeometry x="360" y="-160" width="69" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Ubuntu 1804" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=20;image=img/lib/azure2/compute/Virtual_Machine.svg;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="-320" width="69" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="Log Analytics&lt;br&gt;Workspaces" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=20;image=img/lib/azure2/management_governance/Log_Analytics_Workspaces.svg;strokeColor=#007FFF;fillColor=#CCE5FF;" parent="1" vertex="1">
+                    <mxGeometry x="1830" y="-224" width="64" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="Azure Monitor&#10;Private Link Scope" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://catalogartifact.azureedge.net/publicartifacts/Microsoft.AzureMonitorPrivateLinkScope-1.0.2/Large.png;fontSize=20;" parent="1" vertex="1">
+                    <mxGeometry x="1478" y="-256" width="115" height="115" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="Data Collection Endpoint" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=20;image=img/lib/azure2/networking/Private_Endpoint.svg;strokeColor=#007FFF;fillColor=#CCE5FF;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="1169" y="-226" width="72" height="66" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" style="edgeStyle=none;html=1;fontSize=20;strokeWidth=3;exitX=0.961;exitY=0.535;exitDx=0;exitDy=0;exitPerimeter=0;strokeColor=#FF0000;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1279.9999999999998" y="-193.62000000000003" as="sourcePoint"/>
+                        <mxPoint x="1440.03" y="-193.67" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="22" style="edgeStyle=none;html=1;fontSize=20;strokeWidth=3;exitX=0.961;exitY=0.535;exitDx=0;exitDy=0;exitPerimeter=0;strokeColor=#FF0000;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1620" y="-193.62000000000012" as="sourcePoint"/>
+                        <mxPoint x="1780.0299999999997" y="-193.67000000000007" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
