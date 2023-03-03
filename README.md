@@ -5,3 +5,7 @@ Terraform examples for Azure Infrastructure
 ![img](./azure-vm-monitoring/docs/architecture.png)
 
 ## [Azure File Sync](./azure-file-sync/README.md)
+
+## [Azure Virtual Hub with Firewall](./azure-file-sync/README.md)
+
+## [Azure Policy](./azure-file-sync/README.md)
