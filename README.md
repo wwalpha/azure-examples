@@ -9,3 +9,5 @@ Terraform examples for Azure Infrastructure
 ## [Azure Virtual Hub with Firewall](./azure-file-sync/README.md)
 
 ## [Azure Policy](./azure-file-sync/README.md)
+
+## [Azure Kubernetes](./azure-file-sync/README.md)
