@@ -11,15 +11,15 @@ resource "azurerm_network_security_group" "this" {
 # Azure Network Security Rule
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_network_security_rule" "this" {
-  name                        = "disable_internet"
-  priority                    = 100
-  direction                   = "Outbound"
-  access                      = "Deny"
+  name                        = "AllowInbound"
+  priority                    = 1000
+  direction                   = "Inbound"
+  access                      = "Allow"
   protocol                    = "*"
   source_port_range           = "*"
-  destination_port_range      = "*"
-  source_address_prefix       = "*"
-  destination_address_prefix  = "Internet"
+  source_address_prefix       = "Internet"
+  destination_port_range      = "80"
+  destination_address_prefix  = "*"
   resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.this.name
 }
@@ -34,7 +34,7 @@ resource "azurerm_network_interface" "win2016" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = var.vm_subnet_id
+    subnet_id                     = var.vnet_subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }
@@ -49,7 +49,7 @@ resource "azurerm_network_interface" "win2022" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = var.vm_subnet_id
+    subnet_id                     = var.vnet_subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }
@@ -64,7 +64,7 @@ resource "azurerm_network_interface" "rhel_86" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = var.vm_subnet_id
+    subnet_id                     = var.vnet_subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }
@@ -79,7 +79,7 @@ resource "azurerm_network_interface" "ubuntu" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = var.vm_subnet_id
+    subnet_id                     = var.vnet_subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }

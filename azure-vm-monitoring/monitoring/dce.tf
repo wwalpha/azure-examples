@@ -47,9 +47,9 @@ resource "azurerm_monitor_data_collection_rule_association" "dce_rhel_86" {
 }
 
 # ----------------------------------------------------------------------------------------------
-# Azure Monitor Data Collection Rule Association - Ubuntu 18.04
+# Azure Monitor Data Collection Rule Association - Ubuntu 20.04
 # ----------------------------------------------------------------------------------------------
-resource "azurerm_monitor_data_collection_rule_association" "dce_ubuntu_1804" {
-  target_resource_id          = var.ubuntu_1804_vm_id
+resource "azurerm_monitor_data_collection_rule_association" "dce_ubuntu_2004" {
+  target_resource_id          = var.ubuntu_2004_vm_id
   data_collection_endpoint_id = azurerm_monitor_data_collection_endpoint.linux.id
 }

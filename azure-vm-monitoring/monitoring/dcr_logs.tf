@@ -126,10 +126,10 @@ resource "azurerm_monitor_data_collection_rule_association" "dcr_rhel_86_syslog"
 }
 
 # ----------------------------------------------------------------------------------------------
-# Azure Monitor Data Collection Rule Association - Ubuntu 18.04
+# Azure Monitor Data Collection Rule Association - Ubuntu 20.04
 # ----------------------------------------------------------------------------------------------
-resource "azurerm_monitor_data_collection_rule_association" "dcr_ubuntu_1804_syslog" {
+resource "azurerm_monitor_data_collection_rule_association" "dcr_ubuntu_2004_syslog" {
   name                    = "dcr-ubuntu-syslog-${var.suffix}"
-  target_resource_id      = var.ubuntu_1804_vm_id
+  target_resource_id      = var.ubuntu_2004_vm_id
   data_collection_rule_id = azurerm_monitor_data_collection_rule.linux_syslogs.id
 }

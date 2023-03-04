@@ -56,7 +56,8 @@ module "computing" {
   resource_group_location = azurerm_resource_group.this.location
   azurevm_admin_username  = var.azurevm_admin_username
   azurevm_admin_password  = var.azurevm_admin_password
-  vm_subnet_id            = module.networking.vm_subnet_id
+  vnet_id                 = module.networking.vnet_id
+  vnet_subnet_id          = module.networking.vnet_subnet_id
   suffix                  = local.suffix
 }
 
@@ -72,6 +73,6 @@ module "monitoring" {
   win2016_vm_id           = module.computing.win2016_vm_id
   win2022_vm_id           = module.computing.win2022_vm_id
   rhel_86_vm_id           = module.computing.rhel_86_vm_id
-  ubuntu_1804_vm_id       = module.computing.ubuntu_1804_vm_id
+  ubuntu_2004_vm_id       = module.computing.ubuntu_2004_vm_id
   ampls_scope_name        = module.networking.ampls_scope_name
 }

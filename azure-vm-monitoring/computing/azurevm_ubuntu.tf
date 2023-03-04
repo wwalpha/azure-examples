@@ -1,49 +1,31 @@
 # ----------------------------------------------------------------------------------------------
 # Azure Virtual Machine - Redhat Linux Enterprise 8.6
 # ----------------------------------------------------------------------------------------------
-resource "azurerm_virtual_machine" "ubuntu" {
-  depends_on                       = [azurerm_network_interface_security_group_association.ubuntu]
-  name                             = "ubuntu-1804-${var.suffix}"
-  location                         = var.resource_group_location
-  resource_group_name              = var.resource_group_name
-  vm_size                          = "Standard_B2ms"
-  delete_data_disks_on_termination = true
-  delete_os_disk_on_termination    = true
-  network_interface_ids            = [azurerm_network_interface.ubuntu.id]
-
+resource "azurerm_linux_virtual_machine" "ubuntu" {
+  depends_on                      = [azurerm_network_interface_security_group_association.ubuntu]
+  name                            = "ubuntu-2004-${var.suffix}"
+  location                        = var.resource_group_location
+  resource_group_name             = var.resource_group_name
+  network_interface_ids           = [azurerm_network_interface.ubuntu.id]
+  size                            = "Standard_B2ms"
+  computer_name                   = "Ubuntu2004"
+  disable_password_authentication = false
+  admin_username                  = var.azurevm_admin_username
+  admin_password                  = var.azurevm_admin_password
+  custom_data                     = filebase64("${path.module}/scripts/ubuntu-cloud-init.yml")
   identity {
     type = "SystemAssigned"
   }
 
-  os_profile {
-    computer_name  = "Ubuntu1804"
-    admin_username = var.azurevm_admin_username
-    admin_password = var.azurevm_admin_password
-    # custom_data    = <<-EOF
-    #   #cloud-config
-    #   package_upgrade: true
-    #   packages:
-    #     - nginx
-    #   runcmd:
-    #     - service nginx restart
-    # EOF
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "StandardSSD_LRS"
   }
 
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
-
-  storage_os_disk {
-    name              = "Ubuntu${var.suffix}"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "StandardSSD_LRS"
-  }
-
-  storage_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "18_04-lts-gen2"
+  source_image_reference {
+    publisher = "canonical"
+    offer     = "0001-com-ubuntu-server-focal"
+    sku       = "20_04-lts-gen2"
     version   = "latest"
   }
 }
@@ -53,7 +35,7 @@ resource "azurerm_virtual_machine" "ubuntu" {
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_virtual_machine_extension" "ubuntu_azure_monitor" {
   name                       = "AzureMonitorLinuxAgent"
-  virtual_machine_id         = azurerm_virtual_machine.ubuntu.id
+  virtual_machine_id         = azurerm_linux_virtual_machine.ubuntu.id
   publisher                  = "Microsoft.Azure.Monitor"
   type                       = "AzureMonitorLinuxAgent"
   type_handler_version       = "1.0"
@@ -66,7 +48,7 @@ resource "azurerm_virtual_machine_extension" "ubuntu_azure_monitor" {
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_virtual_machine_extension" "ubuntu_dependency_agent" {
   name                       = "DependencyAgentLinux"
-  virtual_machine_id         = azurerm_virtual_machine.ubuntu.id
+  virtual_machine_id         = azurerm_linux_virtual_machine.ubuntu.id
   publisher                  = "Microsoft.Azure.Monitoring.DependencyAgent"
   type                       = "DependencyAgentLinux"
   type_handler_version       = "9.10"

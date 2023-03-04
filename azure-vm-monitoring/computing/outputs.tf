@@ -2,26 +2,33 @@
 # Azure Virtual Machine ID - Windows Server 2016
 # ----------------------------------------------------------------------------------------------
 output "win2016_vm_id" {
-  value = azurerm_virtual_machine.win2016.id
+  value = azurerm_windows_virtual_machine.win2016.id
 }
 
 # ----------------------------------------------------------------------------------------------
 # Azure Virtual Machine ID - Windows Server 2022
 # ----------------------------------------------------------------------------------------------
 output "win2022_vm_id" {
-  value = azurerm_virtual_machine.win2022.id
+  value = azurerm_windows_virtual_machine.win2022.id
 }
 
 # ----------------------------------------------------------------------------------------------
 # Azure Virtual Machine ID - RHEL 8.6
 # ----------------------------------------------------------------------------------------------
 output "rhel_86_vm_id" {
-  value = azurerm_virtual_machine.rhel_86.id
+  value = azurerm_linux_virtual_machine.rhel_86.id
 }
 
 # ----------------------------------------------------------------------------------------------
-# Azure Virtual Machine ID - Ubuntu 18.04
+# Azure Virtual Machine ID - Ubuntu 20.04
 # ----------------------------------------------------------------------------------------------
-output "ubuntu_1804_vm_id" {
-  value = azurerm_virtual_machine.ubuntu.id
+output "ubuntu_2004_vm_id" {
+  value = azurerm_linux_virtual_machine.ubuntu.id
+}
+
+# ----------------------------------------------------------------------------------------------
+# Azure Load Balancer Public IP Address
+# ----------------------------------------------------------------------------------------------
+output "lb_public_ip" {
+  value = azurerm_public_ip.this.ip_address
 }

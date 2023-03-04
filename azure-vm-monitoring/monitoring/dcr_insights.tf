@@ -77,9 +77,9 @@ resource "azurerm_monitor_data_collection_rule_association" "dcr_insights_rhel86
 # ----------------------------------------------------------------------------------------------
 # Azure Monitor Data Collection Rule Association - Ubuntu
 # ----------------------------------------------------------------------------------------------
-resource "azurerm_monitor_data_collection_rule_association" "dcr_insights_ubuntu1804" {
+resource "azurerm_monitor_data_collection_rule_association" "dcr_insights_ubuntu2004" {
   depends_on              = [azurerm_monitor_data_collection_rule.insights]
-  name                    = "dcr-insights-ubuntu1804-${var.suffix}"
-  target_resource_id      = var.ubuntu_1804_vm_id
+  name                    = "dcr-insights-ubuntu2004-${var.suffix}"
+  target_resource_id      = var.ubuntu_2004_vm_id
   data_collection_rule_id = azurerm_monitor_data_collection_rule.insights.id
 }

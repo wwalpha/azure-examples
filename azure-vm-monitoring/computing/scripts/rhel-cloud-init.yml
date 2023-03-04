@@ -1,0 +1,6 @@
+#cloud-config
+runcmd:
+  - dnf update
+  - dnf clean packages
+  - dnf install -y nginx
+  - systemctl restart nginx

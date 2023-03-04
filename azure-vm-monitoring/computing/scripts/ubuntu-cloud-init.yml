@@ -1,0 +1,5 @@
+#cloud-config
+runcmd:
+  - sudo apt update
+  - sudo apt install -y nginx
+  - service nginx restart
