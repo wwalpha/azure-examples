@@ -1,0 +1,7 @@
+[
+  {
+    "RawData": "{\"user\": \"root\", \"pid\": \"39654\", \"cpu_utilization\": \"0.0\", \"memory_utilization\": \"0.0\", \"vsz\": \"0\", \"rss\": \"0\", \"tty\": \"?\", \"stat\": \"I\", \"start\": \"04:59\", \"cpuTime\": \"0:00\", \"command\": \"[kworker/u4:0-events_unbound]\", \"Computer\": \"Ubuntu2004\", \"timestamp\": \"2023-03-05T05:00:01.328627\"}",
+    "Application": "LogGenerator",
+    "Time": "2023-03-05T05:53:27.8557150Z"
+  }
+]

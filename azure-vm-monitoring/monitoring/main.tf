@@ -30,7 +30,31 @@ resource "azapi_resource" "table_nginx_access" {
               "type" : "DateTime"
             },
             {
-              "name" : "Text",
+              "name" : "RawData",
+              "type" : "string"
+            },
+            {
+              "name" : "RemoteAddress",
+              "type" : "string"
+            },
+            {
+              "name" : "RequestType",
+              "type" : "string"
+            },
+            {
+              "name" : "Resource",
+              "type" : "string"
+            },
+            {
+              "name" : "ResponseCode",
+              "type" : "string"
+            },
+            {
+              "name" : "HttpReferer",
+              "type" : "string"
+            },
+            {
+              "name" : "UserAgent",
               "type" : "string"
             }
           ]
@@ -65,7 +89,31 @@ resource "azapi_resource" "table_linux_process" {
               "type" : "DateTime"
             },
             {
-              "name" : "Text",
+              "name" : "RawData",
+              "type" : "string"
+            },
+            {
+              "name" : "User",
+              "type" : "string"
+            },
+            {
+              "name" : "Command",
+              "type" : "string"
+            },
+            {
+              "name" : "Computer",
+              "type" : "string"
+            },
+            {
+              "name" : "CPUUtilization",
+              "type" : "string"
+            },
+            {
+              "name" : "MemoryUtilization",
+              "type" : "string"
+            },
+            {
+              "name" : "Pid",
               "type" : "string"
             }
           ]

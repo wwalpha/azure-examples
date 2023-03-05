@@ -13,6 +13,10 @@ resource "azurerm_public_ip" "this" {
 # Azure Load Balancer 
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_lb" "this" {
+  depends_on = [
+    azurerm_linux_virtual_machine.rhel_86,
+    azurerm_linux_virtual_machine.ubuntu,
+  ]
   name                = "lb-${var.suffix}"
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name

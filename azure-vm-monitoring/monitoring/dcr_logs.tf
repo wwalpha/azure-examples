@@ -151,14 +151,44 @@ resource "azapi_resource" "linux_custom_log" {
     kind = "Linux"
     properties = {
       dataCollectionEndpointId = "${azurerm_monitor_data_collection_endpoint.linux.id}"
+      streamDeclarations = {
+        Custom-NginxAccessLog_CL = {
+          columns = [
+            {
+              name = "TimeGenerated",
+              type = "datetime"
+            },
+            {
+              name = "RawData",
+              type = "string"
+            }
+          ]
+        }
+      },
       dataFlows = [
         {
           destinations = [
             "la-1234567"
-          ]
+          ],
           streams = [
             "Custom-NginxAccessLog_CL"
-          ]
+          ],
+          transformKql = <<EOT
+          source
+            | extend TimeGenerated = now()
+            | parse RawData with 
+            RemoteAddress:string 
+            ' ' *
+            ' ' *
+            ' [' * '] "' RequestType:string
+            " " Resource:string
+            " " *
+            '" ' ResponseCode:string
+            ' ' *
+            ' "' HttpReferer:string
+            '" "' UserAgent:string '"'
+          EOT
+          outputStream = "Custom-NginxAccessLog_CL"
         }
       ]
       dataSources = {
@@ -221,14 +251,40 @@ resource "azapi_resource" "dcr_linux_process" {
     kind = "Linux"
     properties = {
       dataCollectionEndpointId = "${azurerm_monitor_data_collection_endpoint.linux.id}"
+      streamDeclarations = {
+        Custom-LinuxProcess_CL = {
+          columns = [
+            {
+              name = "TimeGenerated",
+              type = "datetime"
+            },
+            {
+              name = "RawData",
+              type = "string"
+            }
+          ]
+        }
+      },
       dataFlows = [
         {
-          destinations = [
-            "la-1234567"
-          ]
           streams = [
             "Custom-LinuxProcess_CL"
-          ]
+          ],
+          destinations = [
+            "la-1234567"
+          ],
+          transformKql = <<EOT
+            source
+              | extend datas = parse_json(RawData)
+              | project TimeGenerated = todatetime(datas.timestamp)
+              , User = datas.user
+              , Pid = datas.pid
+              , CPUUtilization = datas.cpu_utilization
+              , MemoryUtilization = datas.memory_utilization
+              , Command = datas.command
+              , Computer = datas.Computer
+          EOT
+          outputStream = "Custom-LinuxProcess_CL"
         }
       ]
       dataSources = {
