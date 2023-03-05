@@ -42,6 +42,7 @@ resource "azurerm_monitor_data_collection_rule" "perf" {
         "\\Memory\\Pool Nonpaged Bytes",
         "\\Memory\\Pages/sec",
         "\\Memory\\Page Faults/sec",
+        "\\Process\\ID Process",
         "\\Process(_Total)\\Working Set",
         "\\Process(_Total)\\Working Set - Private",
         "\\LogicalDisk(_Total)\\% Disk Time",

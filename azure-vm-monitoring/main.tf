@@ -9,8 +9,10 @@ terraform {
 
   required_providers {
     azurerm = {
-      source  = "hashicorp/azurerm"
-      version = ">3.0.0"
+      source = "hashicorp/azurerm"
+    }
+    azapi = {
+      source = "Azure/azapi"
     }
   }
 }
@@ -24,6 +26,8 @@ provider "azurerm" {
 
   use_msi = true
 }
+
+provider "azapi" {}
 
 # ----------------------------------------------------------------------------------------------
 # Azure Resource Group
@@ -65,8 +69,8 @@ module "computing" {
 # Azure Monitoring Module
 # ----------------------------------------------------------------------------------------------
 module "monitoring" {
-  source = "./monitoring"
-
+  source                  = "./monitoring"
+  resource_group_id       = azurerm_resource_group.this.id
   resource_group_name     = azurerm_resource_group.this.name
   resource_group_location = azurerm_resource_group.this.location
   suffix                  = local.suffix

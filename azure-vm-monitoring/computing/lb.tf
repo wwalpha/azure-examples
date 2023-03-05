@@ -29,7 +29,8 @@ resource "azurerm_lb" "this" {
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_lb_probe" "ubuntu" {
   loadbalancer_id     = azurerm_lb.this.id
-  name                = "ssh-probe"
+  name                = "http-probe"
+  protocol            = "Http"
   port                = 80
   request_path        = "/"
   interval_in_seconds = 5
@@ -47,6 +48,7 @@ resource "azurerm_lb_rule" "ubuntu_http" {
   probe_id                       = azurerm_lb_probe.ubuntu.id
   frontend_ip_configuration_name = azurerm_lb.this.frontend_ip_configuration[0].name
   backend_address_pool_ids       = [azurerm_lb_backend_address_pool.ubuntu.id]
+  disable_outbound_snat          = true
 }
 
 # ----------------------------------------------------------------------------------------------
@@ -61,4 +63,20 @@ resource "azurerm_lb_rule" "rhel_http" {
   probe_id                       = azurerm_lb_probe.ubuntu.id
   frontend_ip_configuration_name = azurerm_lb.this.frontend_ip_configuration[0].name
   backend_address_pool_ids       = [azurerm_lb_backend_address_pool.rhel.id]
+  disable_outbound_snat          = true
+}
+
+# ----------------------------------------------------------------------------------------------
+# Azure Load Balancer Outbound Rule - Ubuntu
+# ----------------------------------------------------------------------------------------------
+resource "azurerm_lb_outbound_rule" "this" {
+  name                     = "UbuntuAllowInternet"
+  loadbalancer_id          = azurerm_lb.this.id
+  protocol                 = "Tcp"
+  backend_address_pool_id  = azurerm_lb_backend_address_pool.ubuntu.id
+  allocated_outbound_ports = 1024
+
+  frontend_ip_configuration {
+    name = azurerm_lb.this.frontend_ip_configuration[0].name
+  }
 }

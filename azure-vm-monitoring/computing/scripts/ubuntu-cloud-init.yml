@@ -1,5 +1,49 @@
 #cloud-config
+write_files:
+  - owner: root:root
+    path: /etc/cron.d/process
+    content: |
+      */5 * * * * root python3 /lib/modules/monitoring/process.py
+  - owner: root:root
+    path: /lib/modules/monitoring/process.py
+    content: |
+      #!/usr/bin/env python
+      # -*- coding: utf-8 -*-
+
+      import subprocess
+      import datetime
+      import socket
+      import json
+
+      PROCESS_HEADERS = ['user', 'pid', 'cpu_utilization', 'memory_utilization', 'vsz', 'rss', 'tty', 'stat', 'start', 'cpuTime', 'command', 'Computer', 'timestamp']
+      HOSTNAME = socket.gethostname()
+      TIMESTAMP = datetime.datetime.utcnow().isoformat()
+      LOG_FILE = '/var/log/process.log'
+
+      def get_processes():
+        # get std output
+          stdout = subprocess.Popen(['ps', 'aux', '--no-headers'], stdout=subprocess.PIPE).stdout.readlines()
+          # transfer
+          list_datas = list(map(lambda s: s.strip().decode('ascii').split(None, len(PROCESS_HEADERS) - 3), stdout[1:]))
+
+          # add common item
+          for i in range(0, len(list_datas)):
+              list_datas[i].append(HOSTNAME)
+              list_datas[i].append(TIMESTAMP)
+
+      # transfer to dict
+          return [dict(zip(PROCESS_HEADERS, r)) for r in list_datas]
+
+      # get processes
+      procs = get_processes()
+      # convert to json
+      processes = list(map(lambda p: json.dumps(p), procs))
+
+      # write to log file
+      with open(LOG_FILE, 'a') as f:
+        f.write('\n'.join(processes))
 runcmd:
-  - sudo apt update
-  - sudo apt install -y nginx
-  - service nginx restart
+  - apt-get update
+  - apt-get install -y nginx
+  - systemctl restart nginx
+  - systemctl restart cron

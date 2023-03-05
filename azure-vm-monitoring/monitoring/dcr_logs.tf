@@ -133,3 +133,143 @@ resource "azurerm_monitor_data_collection_rule_association" "dcr_ubuntu_2004_sys
   target_resource_id      = var.ubuntu_2004_vm_id
   data_collection_rule_id = azurerm_monitor_data_collection_rule.linux_syslogs.id
 }
+
+# ----------------------------------------------------------------------------------------------
+# Azure Monitor Data Collection Rule - Linux Custom Logs
+# ----------------------------------------------------------------------------------------------
+resource "azapi_resource" "linux_custom_log" {
+  depends_on = [
+    azapi_resource.table_nginx_access
+  ]
+  provider  = azapi
+  type      = "Microsoft.Insights/dataCollectionRules@2021-09-01-preview"
+  name      = "MSVMI-Linux-CustomLogs"
+  location  = var.resource_group_location
+  parent_id = var.resource_group_id
+
+  body = jsonencode({
+    kind = "Linux"
+    properties = {
+      dataCollectionEndpointId = "${azurerm_monitor_data_collection_endpoint.linux.id}"
+      dataFlows = [
+        {
+          destinations = [
+            "la-1234567"
+          ]
+          streams = [
+            "Custom-NginxAccessLog_CL"
+          ]
+        }
+      ]
+      dataSources = {
+        logFiles = [
+          {
+            filePatterns = [
+              "/var/log/nginx/access*.log"
+            ]
+            format = "text"
+            name   = "NginxAccessLog_CL"
+            settings = {
+              text = {
+                recordStartTimestampFormat = "yyyy-MM-ddTHH:mm:ssK"
+              }
+            }
+            streams = [
+              "Custom-NginxAccessLog_CL"
+            ]
+          }
+        ]
+      }
+      description = "string"
+      destinations = {
+        logAnalytics = [
+          {
+            name                = "la-1234567"
+            workspaceResourceId = "${azurerm_log_analytics_workspace.this.id}"
+          }
+        ]
+      }
+    }
+  })
+
+  response_export_values = ["id"]
+}
+
+# ----------------------------------------------------------------------------------------------
+# Azure Monitor Data Collection Rule Association - Ubuntu 20.04
+# ----------------------------------------------------------------------------------------------
+resource "azurerm_monitor_data_collection_rule_association" "dcr_ubuntu_customlog" {
+  name                    = "dcr-ubuntu-customlog-${var.suffix}"
+  target_resource_id      = var.ubuntu_2004_vm_id
+  data_collection_rule_id = jsondecode(azapi_resource.linux_custom_log.output).id
+}
+
+# ----------------------------------------------------------------------------------------------
+# Azure Monitor Data Collection Rule - Linux Process
+# ----------------------------------------------------------------------------------------------
+resource "azapi_resource" "dcr_linux_process" {
+  depends_on = [
+    azapi_resource.table_linux_process
+  ]
+  provider  = azapi
+  type      = "Microsoft.Insights/dataCollectionRules@2021-09-01-preview"
+  name      = "MSVMI-Linux-Processes"
+  location  = var.resource_group_location
+  parent_id = var.resource_group_id
+
+  body = jsonencode({
+    kind = "Linux"
+    properties = {
+      dataCollectionEndpointId = "${azurerm_monitor_data_collection_endpoint.linux.id}"
+      dataFlows = [
+        {
+          destinations = [
+            "la-1234567"
+          ]
+          streams = [
+            "Custom-LinuxProcess_CL"
+          ]
+        }
+      ]
+      dataSources = {
+        logFiles = [
+          {
+            filePatterns = [
+              "/var/log/process*.log"
+            ]
+            format = "text"
+            name   = "LinuxProcess_CL"
+            settings = {
+              text = {
+                recordStartTimestampFormat = "yyyy-MM-ddTHH:mm:ssK"
+              }
+            }
+            streams = [
+              "Custom-LinuxProcess_CL"
+            ]
+          }
+        ]
+      }
+      description = "string"
+      destinations = {
+        logAnalytics = [
+          {
+            name                = "la-1234567"
+            workspaceResourceId = "${azurerm_log_analytics_workspace.this.id}"
+          }
+        ]
+      }
+    }
+  })
+
+  response_export_values = ["id"]
+}
+
+# ----------------------------------------------------------------------------------------------
+# Azure Monitor Data Collection Rule Association - Ubuntu 20.04
+# ----------------------------------------------------------------------------------------------
+resource "azurerm_monitor_data_collection_rule_association" "linux_process" {
+  name                    = "dcr-linux-process-${var.suffix}"
+  target_resource_id      = var.ubuntu_2004_vm_id
+  data_collection_rule_id = jsondecode(azapi_resource.dcr_linux_process.output).id
+}

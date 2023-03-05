@@ -10,6 +10,76 @@ resource "azurerm_log_analytics_workspace" "this" {
 }
 
 # ----------------------------------------------------------------------------------------------
+# Azure Log Analytics Workspace Table
+# ----------------------------------------------------------------------------------------------
+resource "azapi_resource" "table_nginx_access" {
+  depends_on = [azurerm_log_analytics_workspace.this]
+  provider   = azapi
+  type       = "Microsoft.OperationalInsights/workspaces/tables@2022-10-01"
+  name       = "NginxAccessLog_CL"
+  parent_id  = azurerm_log_analytics_workspace.this.id
+
+  body = jsonencode(
+    {
+      "properties" : {
+        "schema" : {
+          "name" : "NginxAccessLog_CL",
+          "columns" : [
+            {
+              "name" : "TimeGenerated",
+              "type" : "DateTime"
+            },
+            {
+              "name" : "Text",
+              "type" : "string"
+            }
+          ]
+        },
+        "retentionInDays" : 30,
+        "totalRetentionInDays" : 30
+      }
+    }
+  )
+
+  response_export_values = ["id"]
+}
+
+# ----------------------------------------------------------------------------------------------
+# Azure Log Analytics Workspace Table
+# ----------------------------------------------------------------------------------------------
+resource "azapi_resource" "table_linux_process" {
+  depends_on = [azurerm_log_analytics_workspace.this]
+  provider   = azapi
+  type       = "Microsoft.OperationalInsights/workspaces/tables@2022-10-01"
+  name       = "LinuxProcess_CL"
+  parent_id  = azurerm_log_analytics_workspace.this.id
+
+  body = jsonencode(
+    {
+      "properties" : {
+        "schema" : {
+          "name" : "LinuxProcess_CL",
+          "columns" : [
+            {
+              "name" : "TimeGenerated",
+              "type" : "DateTime"
+            },
+            {
+              "name" : "Text",
+              "type" : "string"
+            }
+          ]
+        },
+        "retentionInDays" : 30,
+        "totalRetentionInDays" : 30
+      }
+    }
+  )
+
+  response_export_values = ["id"]
+}
+
+# ----------------------------------------------------------------------------------------------
 # Azure Monitor Private Link Scoped Service - Workspace
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_monitor_private_link_scoped_service" "workspace" {
