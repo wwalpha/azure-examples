@@ -27,7 +27,6 @@ resource "azurerm_lb_backend_address_pool" "rhel" {
 # Azure Load Balancer Backend Address Pool Association - RHEL
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_network_interface_backend_address_pool_association" "rhel" {
-  depends_on              = [azurerm_network_interface_backend_address_pool_association.ubuntu]
   network_interface_id    = azurerm_network_interface.rhel_86.id
   ip_configuration_name   = azurerm_network_interface.rhel_86.ip_configuration[0].name
   backend_address_pool_id = azurerm_lb_backend_address_pool.rhel.id

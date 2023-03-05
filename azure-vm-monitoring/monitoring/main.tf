@@ -86,34 +86,10 @@ resource "azapi_resource" "table_linux_process" {
           "columns" : [
             {
               "name" : "TimeGenerated",
-              "type" : "DateTime"
+              "type" : "Datetime"
             },
             {
               "name" : "RawData",
-              "type" : "string"
-            },
-            {
-              "name" : "User",
-              "type" : "string"
-            },
-            {
-              "name" : "Command",
-              "type" : "string"
-            },
-            {
-              "name" : "Computer",
-              "type" : "string"
-            },
-            {
-              "name" : "CPUUtilization",
-              "type" : "string"
-            },
-            {
-              "name" : "MemoryUtilization",
-              "type" : "string"
-            },
-            {
-              "name" : "Pid",
               "type" : "string"
             }
           ]

@@ -37,7 +37,7 @@ resource "azurerm_lb_probe" "ubuntu" {
   protocol            = "Http"
   port                = 80
   request_path        = "/"
-  interval_in_seconds = 5
+  interval_in_seconds = 60
 }
 
 # ----------------------------------------------------------------------------------------------

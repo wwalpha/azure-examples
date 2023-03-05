@@ -174,19 +174,7 @@ resource "azapi_resource" "linux_custom_log" {
             "Custom-NginxAccessLog_CL"
           ],
           transformKql = <<EOT
-          source
-            | extend TimeGenerated = now()
-            | parse RawData with 
-            RemoteAddress:string 
-            ' ' *
-            ' ' *
-            ' [' * '] "' RequestType:string
-            " " Resource:string
-            " " *
-            '" ' ResponseCode:string
-            ' ' *
-            ' "' HttpReferer:string
-            '" "' UserAgent:string '"'
+source | extend TimeGenerated = now() | parse RawData with RemoteAddress:string ' ' * ' ' * ' [' * '] "' RequestType:string " " Resource:string " " * '" ' ResponseCode:string ' ' * ' "' HttpReferer:string '" "' UserAgent:string '"'
           EOT
           outputStream = "Custom-NginxAccessLog_CL"
         }
@@ -273,17 +261,7 @@ resource "azapi_resource" "dcr_linux_process" {
           destinations = [
             "la-1234567"
           ],
-          transformKql = <<EOT
-            source
-              | extend datas = parse_json(RawData)
-              | project TimeGenerated = todatetime(datas.timestamp)
-              , User = datas.user
-              , Pid = datas.pid
-              , CPUUtilization = datas.cpu_utilization
-              , MemoryUtilization = datas.memory_utilization
-              , Command = datas.command
-              , Computer = datas.Computer
-          EOT
+          transformKql = "source | extend datas = parse_json(RawData) | project TimeGenerated = todatetime(datas.timestamp), User = datas.user, Pid = datas.pid, CPUUtilization = datas.cpu_utilization, MemoryUtilization = datas.memory_utilization, Command = datas.command, Computer = datas.Computer"
           outputStream = "Custom-LinuxProcess_CL"
         }
       ]
@@ -324,8 +302,18 @@ resource "azapi_resource" "dcr_linux_process" {
 # ----------------------------------------------------------------------------------------------
 # Azure Monitor Data Collection Rule Association - Ubuntu 20.04
 # ----------------------------------------------------------------------------------------------
-resource "azurerm_monitor_data_collection_rule_association" "linux_process" {
-  name                    = "dcr-linux-process-${var.suffix}"
+resource "azurerm_monitor_data_collection_rule_association" "ubuntu_process" {
+  name                    = "dcr-ubuntu-process-${var.suffix}"
   target_resource_id      = var.ubuntu_2004_vm_id
   data_collection_rule_id = jsondecode(azapi_resource.dcr_linux_process.output).id
 }
+
+# ----------------------------------------------------------------------------------------------
+# Azure Monitor Data Collection Rule Association - RHEL 8.6
+# ----------------------------------------------------------------------------------------------
+resource "azurerm_monitor_data_collection_rule_association" "rhel_process" {
+  name                    = "dcr-rhel-process-${var.suffix}"
+  target_resource_id      = var.rhel_86_vm_id
+  data_collection_rule_id = jsondecode(azapi_resource.dcr_linux_process.output).id
+}
+
