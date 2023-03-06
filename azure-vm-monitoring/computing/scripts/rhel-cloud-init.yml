@@ -1,4 +1,7 @@
 #cloud-config
+package_upgrade: true
+packages:
+  - nginx
 write_files:
   - owner: root:root
     path: /etc/cron.d/process
@@ -31,7 +34,7 @@ write_files:
               list_datas[i].append(HOSTNAME)
               list_datas[i].append(TIMESTAMP)
 
-      # transfer to dict
+          # transfer to dict
           return [dict(zip(PROCESS_HEADERS, r)) for r in list_datas]
 
       # get processes
@@ -43,4 +46,5 @@ write_files:
       with open(LOG_FILE, 'a') as f:
         f.write('\n'.join(processes))
 runcmd:
+  - systemctl restart nginx
   - systemctl restart cron
