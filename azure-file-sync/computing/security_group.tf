@@ -11,7 +11,7 @@ resource "azurerm_network_interface" "source" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = var.agent_subnet_id
+    subnet_id                     = var.source_subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }
@@ -34,7 +34,7 @@ resource "azurerm_network_interface" "target" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = var.agent_subnet_id
+    subnet_id                     = var.source_subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }

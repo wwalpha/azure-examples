@@ -2,7 +2,9 @@ variable "resource_group_name" {}
 
 variable "resource_group_location" {}
 
-variable "agent_subnet_id" {}
+variable "source_subnet_id" {}
+
+variable "target_subnet_id" {}
 
 variable "azurevm_admin_username" {}
 
