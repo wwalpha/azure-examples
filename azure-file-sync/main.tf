@@ -49,6 +49,7 @@ module "networking" {
   resource_group_location = azurerm_resource_group.this.location
   suffix                  = local.suffix
   storage_account_id      = module.storage.storage_account_id
+  storage_sync_id         = module.storage.storage_sync_id
 }
 
 module "computing" {
@@ -63,3 +64,23 @@ module "computing" {
   identity_id             = module.security.container_instance_contributor_role_id
   suffix                  = local.suffix
 }
+
+# resource "azurerm_private_endpoint" "this" {
+#   name                          = "storagesync-endpoint"
+#   location                      = azurerm_resource_group.this.location
+#   resource_group_name           = azurerm_resource_group.this.name
+#   subnet_id                     = "/subscriptions/cda6bd1c-c03b-40b5-a211-9b0bd4583a14/resourceGroups/file-sync-70002a3a/providers/Microsoft.Network/virtualNetworks/agent-vnet-70002a3a/subnets/TargetSubnet-70002a3a"
+#   custom_network_interface_name = "storagesync-endpoint-nic"
+
+#   private_service_connection {
+#     private_connection_resource_id = "/subscriptions/cda6bd1c-c03b-40b5-a211-9b0bd4583a14/resourceGroups/file-sync-70002a3a/providers/Microsoft.Storage/storageAccounts/storage70002a3a"
+#     is_manual_connection           = false
+#     subresource_names              = ["file"]
+#     name                           = "storagesync-endpoint"
+#   }
+
+#   private_dns_zone_group {
+#     name                 = "default"
+#     private_dns_zone_ids = ["/subscriptions/cda6bd1c-c03b-40b5-a211-9b0bd4583a14/resourceGroups/file-sync-70002a3a/providers/Microsoft.Network/privateDnsZones/privatelink.file.core.windows.net"]
+#   }
+# }
