@@ -261,7 +261,7 @@ resource "azapi_resource" "dcr_linux_process" {
           destinations = [
             "la-1234567"
           ],
-          transformKql = "source | extend datas = parse_json(RawData) | project TimeGenerated = todatetime(datas.timestamp), User = datas.user, Pid = datas.pid, CPUUtilization = datas.cpu_utilization, MemoryUtilization = datas.memory_utilization, Command = datas.command, Computer = datas.Computer"
+          transformKql = "source | extend datas = parse_json(RawData) | project TimeGenerated = todatetime(datas.timestamp), RawData = RawData, User = datas.user, Pid = datas.pid, CPUUtilization = datas.cpu_utilization, MemoryUtilization = datas.memory_utilization, Command = datas.command, Computer = datas.Computer"
           outputStream = "Custom-LinuxProcess_CL"
         }
       ]
