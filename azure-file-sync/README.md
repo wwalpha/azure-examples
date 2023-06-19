@@ -1,11 +1,40 @@
 # Azure File Sync Example
 
-1. Download and install [Azure File Sync Agent](https://www.microsoft.com/en-us/download/details.aspx?id=57159)
-2. Register server
-3. Add cloud endpoint and server endpoint
-4. Config Cloud Tiering to enabled
-5. Add modules from gallery
+## [Deploy Azure File Sync](https://learn.microsoft.com/en-us/azure/storage/file-sync/file-sync-deployment-guide?tabs=azure-portal%2Cproactive-portal)
+1. Download and install Azure File Sync Agent
+[Microsoft Download Center](https://www.microsoft.com/en-us/download/details.aspx?id=57159)
+
+2. Disable Internet Explorer Enhanced Security Configuration
+- Server Manager > Local Server
+- On the Properties subpane, select the link for IE Enhanced Security Configuration.
+- In the Internet Explorer Enhanced Security Configuration dialog box, select Off for Administrators and Users
+
+
+3. Register server
+You would need to create a custom role where you list the administrators that are only allowed to register servers and give your custom role the following permissions
+
+- "Microsoft.StorageSync/storageSyncServices/registeredServers/write"
+- "Microsoft.StorageSync/storageSyncServices/read"
+- "Microsoft.StorageSync/storageSyncServices/workflows/read"
+- "Microsoft.StorageSync/storageSyncServices/workflows/operations/read"
+
+4. Add cloud endpoint
+
+5. Create a server endpoint
+- Registered server
+- Path
+- Cloud Tiering
+  - Volume Free Space Policy
+  - Date Policy
+- Initial Sync
+  - Initial Upload
+  - Initial Download
+
+6. Config Cloud Tiering to enabled
+
+7. Add modules from gallery
 - Az.Accounts
 - Az.ContainerInstance
 - Az.Storage
-6. Add automation account schedule to execute runbook
+
+8. Add automation account schedule to execute runbook
