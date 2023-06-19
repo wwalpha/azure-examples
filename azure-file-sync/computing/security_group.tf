@@ -49,7 +49,7 @@ resource "azurerm_network_interface" "target" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = var.source_subnet_id
+    subnet_id                     = var.target_subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }

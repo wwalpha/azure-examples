@@ -1,3 +1,6 @@
+# ----------------------------------------------------------------------------------------------
+# Azure Storage Account
+# ----------------------------------------------------------------------------------------------
 resource "azurerm_storage_account" "this" {
   name                          = "storage${var.suffix}"
   resource_group_name           = var.resource_group_name
@@ -9,17 +12,25 @@ resource "azurerm_storage_account" "this" {
   enable_https_traffic_only     = true
 }
 
+# ----------------------------------------------------------------------------------------------
+# Azure Storage Share
+# ----------------------------------------------------------------------------------------------
 resource "azurerm_storage_share" "this" {
   name                 = "share"
   storage_account_name = azurerm_storage_account.this.name
   access_tier          = "TransactionOptimized"
   quota                = 5120
-
-  lifecycle {
-    ignore_changes = [acl]
+  acl {
+    id = "GhostedRecall"
+    access_policy {
+      permissions = "r"
+    }
   }
 }
 
+# ----------------------------------------------------------------------------------------------
+# Azure Storage Container
+# ----------------------------------------------------------------------------------------------
 resource "azurerm_storage_container" "this" {
   name                  = "content"
   storage_account_name  = azurerm_storage_account.this.name
