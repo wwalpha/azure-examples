@@ -1,3 +1,6 @@
+# ----------------------------------------------------------------------------------------------
+# Azure Virtual Machine - Source Server
+# ----------------------------------------------------------------------------------------------
 resource "azurerm_virtual_machine" "source" {
   depends_on                       = [azurerm_network_interface_security_group_association.source]
   name                             = "filesync-source-${var.suffix}"
@@ -36,7 +39,10 @@ resource "azurerm_virtual_machine" "source" {
   }
 }
 
-resource "azurerm_managed_disk" "data" {
+# ----------------------------------------------------------------------------------------------
+# Azure Managed Disk - Source Server
+# ----------------------------------------------------------------------------------------------
+resource "azurerm_managed_disk" "source" {
   name                 = "filesync-source-disk"
   location             = var.resource_group_location
   resource_group_name  = var.resource_group_name
@@ -45,8 +51,11 @@ resource "azurerm_managed_disk" "data" {
   disk_size_gb         = 100
 }
 
-resource "azurerm_virtual_machine_data_disk_attachment" "data" {
-  managed_disk_id    = azurerm_managed_disk.data.id
+# ----------------------------------------------------------------------------------------------
+# Azure Virtual Machine Data Disk Attachment - Source Server
+# ----------------------------------------------------------------------------------------------
+resource "azurerm_virtual_machine_data_disk_attachment" "source" {
+  managed_disk_id    = azurerm_managed_disk.source.id
   virtual_machine_id = azurerm_virtual_machine.source.id
   lun                = "10"
   caching            = "ReadWrite"

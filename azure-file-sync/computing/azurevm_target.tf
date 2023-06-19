@@ -1,3 +1,6 @@
+# ----------------------------------------------------------------------------------------------
+# Azure Virtual Machine - Source Server
+# ----------------------------------------------------------------------------------------------
 resource "azurerm_virtual_machine" "target" {
   depends_on                       = [azurerm_network_interface_security_group_association.target]
   name                             = "filesync-target-${var.suffix}"
@@ -36,6 +39,9 @@ resource "azurerm_virtual_machine" "target" {
   }
 }
 
+# ----------------------------------------------------------------------------------------------
+# Azure Managed Disk - Target Server
+# ----------------------------------------------------------------------------------------------
 resource "azurerm_managed_disk" "target" {
   name                 = "filesync-target-disk"
   location             = var.resource_group_location
@@ -45,6 +51,9 @@ resource "azurerm_managed_disk" "target" {
   disk_size_gb         = 100
 }
 
+# ----------------------------------------------------------------------------------------------
+# Azure Virtual Machine Data Disk Attachment - Target Server
+# ----------------------------------------------------------------------------------------------
 resource "azurerm_virtual_machine_data_disk_attachment" "target" {
   managed_disk_id    = azurerm_managed_disk.target.id
   virtual_machine_id = azurerm_virtual_machine.target.id

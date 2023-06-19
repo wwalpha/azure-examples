@@ -1,9 +1,15 @@
+# ----------------------------------------------------------------------------------------------
+# Azure Network Security Group - Source Server
+# ----------------------------------------------------------------------------------------------
 resource "azurerm_network_security_group" "source" {
   name                = "source-nsg"
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
 }
 
+# ----------------------------------------------------------------------------------------------
+# Azure Network Internet - Source Server
+# ----------------------------------------------------------------------------------------------
 resource "azurerm_network_interface" "source" {
   name                = "source-nic"
   location            = var.resource_group_location
@@ -16,17 +22,26 @@ resource "azurerm_network_interface" "source" {
   }
 }
 
+# ----------------------------------------------------------------------------------------------
+# Azure Network Internet Security Group Association - Source Server
+# ----------------------------------------------------------------------------------------------
 resource "azurerm_network_interface_security_group_association" "source" {
   network_interface_id      = azurerm_network_interface.source.id
   network_security_group_id = azurerm_network_security_group.source.id
 }
 
+# ----------------------------------------------------------------------------------------------
+# Azure Network Security Group - Target Server
+# ----------------------------------------------------------------------------------------------
 resource "azurerm_network_security_group" "target" {
   name                = "target-nsg"
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
 }
 
+# ----------------------------------------------------------------------------------------------
+# Azure Network Internet - Target Server
+# ----------------------------------------------------------------------------------------------
 resource "azurerm_network_interface" "target" {
   name                = "target-nic"
   location            = var.resource_group_location
@@ -39,6 +54,9 @@ resource "azurerm_network_interface" "target" {
   }
 }
 
+# ----------------------------------------------------------------------------------------------
+# Azure Network Internet Security Group Association - Target Server
+# ----------------------------------------------------------------------------------------------
 resource "azurerm_network_interface_security_group_association" "target" {
   network_interface_id      = azurerm_network_interface.target.id
   network_security_group_id = azurerm_network_security_group.target.id
