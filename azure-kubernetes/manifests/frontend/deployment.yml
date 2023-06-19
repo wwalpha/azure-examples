@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: onecloud
+  name: k8s-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-frontend
+  template:
+    metadata:
+      labels:
+        app: k8s-frontend
+    spec:
+      containers:
+        - name: k8s-frontend
+          image: k8srepo.azurecr.io/k8s/frontend:latest
+          ports:
+          - containerPort: 80
+          resources:
+            limits:
+              cpu: 250m
+              memory: 256Mi
+      imagePullSecrets:
+        - name: acr-auth
