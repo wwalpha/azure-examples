@@ -11,7 +11,7 @@ output "sa_share_name" {
 }
 
 output "source_private_ip_address" {
-  value = module.computing.agent_private_ip_address
+  value = module.computing.source_private_ip_address
 }
 
 output "target_private_ip_address" {

@@ -1,11 +1,11 @@
-resource "azurerm_network_security_group" "agent" {
-  name                = "agent-nsg"
+resource "azurerm_network_security_group" "source" {
+  name                = "source-nsg"
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
 }
 
-resource "azurerm_network_interface" "agent" {
-  name                = "agent-nic"
+resource "azurerm_network_interface" "source" {
+  name                = "source-nic"
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
 
@@ -16,9 +16,9 @@ resource "azurerm_network_interface" "agent" {
   }
 }
 
-resource "azurerm_network_interface_security_group_association" "agent" {
-  network_interface_id      = azurerm_network_interface.agent.id
-  network_security_group_id = azurerm_network_security_group.agent.id
+resource "azurerm_network_interface_security_group_association" "source" {
+  network_interface_id      = azurerm_network_interface.source.id
+  network_security_group_id = azurerm_network_security_group.source.id
 }
 
 resource "azurerm_network_security_group" "target" {

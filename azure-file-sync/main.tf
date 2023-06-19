@@ -31,6 +31,7 @@ module "storage" {
   source = "./storage"
 
   suffix                  = local.suffix
+  tenant_id               = local.tenant_id
   resource_group_name     = azurerm_resource_group.this.name
   resource_group_location = azurerm_resource_group.this.location
 }
