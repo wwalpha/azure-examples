@@ -1,10 +1,6 @@
 terraform {
-  backend "remote" {
-    organization = "wwalpha"
-
-    workspaces {
-      name = "azure-file-sync"
-    }
+  backend "local" {
+    path = "./tfstate/terraform.tfstate"
   }
 
   required_providers {

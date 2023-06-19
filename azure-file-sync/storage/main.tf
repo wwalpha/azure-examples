@@ -14,6 +14,10 @@ resource "azurerm_storage_share" "this" {
   storage_account_name = azurerm_storage_account.this.name
   access_tier          = "TransactionOptimized"
   quota                = 5120
+
+  lifecycle {
+    ignore_changes = [acl]
+  }
 }
 
 resource "azurerm_storage_container" "this" {
