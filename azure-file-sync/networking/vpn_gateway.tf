@@ -5,8 +5,6 @@ resource "azurerm_public_ip" "vpngw" {
   allocation_method   = "Dynamic"
 }
 
-data "azurerm_client_config" "this" {}
-
 resource "azurerm_virtual_network_gateway" "this" {
   name                = "vpngw-${var.suffix}"
   location            = var.resource_group_location
