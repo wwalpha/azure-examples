@@ -51,7 +51,7 @@ resource "azurerm_private_endpoint" "storagesync" {
 
   private_service_connection {
     name                           = "storagesync-endpoint"
-    private_connection_resource_id = var.storage_sync_id
+    private_connection_resource_id = var.storage_sync_id_private
     is_manual_connection           = false
     subresource_names              = ["Afs"]
   }

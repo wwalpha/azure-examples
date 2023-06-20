@@ -8,4 +8,5 @@ variable "suffix" {}
 
 variable "storage_account_id" {}
 
-variable "storage_sync_id" {}
+variable "storage_sync_id_private" {}
+

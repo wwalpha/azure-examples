@@ -57,7 +57,7 @@ module "networking" {
   resource_group_name     = azurerm_resource_group.this.name
   resource_group_location = azurerm_resource_group.this.location
   storage_account_id      = module.storage.storage_account_id
-  storage_sync_id         = module.storage.storage_sync_id
+  storage_sync_id_private = module.storage.storage_sync_id_private
 }
 
 module "computing" {
