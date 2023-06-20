@@ -1,18 +1,18 @@
 # ----------------------------------------------------------------------------------------------
-# Azure Virtual Machine - Source Server
+# Azure Virtual Machine - Private Server
 # ----------------------------------------------------------------------------------------------
-resource "azurerm_virtual_machine" "target" {
-  depends_on                       = [azurerm_network_interface_security_group_association.target]
-  name                             = "filesync-target-${var.suffix}"
+resource "azurerm_virtual_machine" "private" {
+  depends_on                       = [azurerm_network_interface_security_group_association.private]
+  name                             = "filesync-private-${var.suffix}"
   location                         = var.resource_group_location
   resource_group_name              = var.resource_group_name
   vm_size                          = "Standard_B2ms"
   delete_data_disks_on_termination = true
   delete_os_disk_on_termination    = true
-  network_interface_ids            = [azurerm_network_interface.target.id]
+  network_interface_ids            = [azurerm_network_interface.private.id]
 
   os_profile {
-    computer_name  = "FileSyncTarget"
+    computer_name  = "FileSyncPrivate"
     admin_username = var.azurevm_admin_username
     admin_password = var.azurevm_admin_password
   }
@@ -24,7 +24,7 @@ resource "azurerm_virtual_machine" "target" {
   }
 
   storage_os_disk {
-    name              = "FileSyncTarget${var.suffix}"
+    name              = "FileSyncPrivate${var.suffix}"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "StandardSSD_LRS"
@@ -40,10 +40,10 @@ resource "azurerm_virtual_machine" "target" {
 }
 
 # ----------------------------------------------------------------------------------------------
-# Azure Managed Disk - Target Server
+# Azure Managed Disk - Private Server
 # ----------------------------------------------------------------------------------------------
-resource "azurerm_managed_disk" "target" {
-  name                 = "filesync-target-disk"
+resource "azurerm_managed_disk" "private" {
+  name                 = "filesync-private-disk"
   location             = var.resource_group_location
   resource_group_name  = var.resource_group_name
   storage_account_type = "Standard_LRS"
@@ -52,11 +52,11 @@ resource "azurerm_managed_disk" "target" {
 }
 
 # ----------------------------------------------------------------------------------------------
-# Azure Virtual Machine Data Disk Attachment - Target Server
+# Azure Virtual Machine Data Disk Attachment - Private Server
 # ----------------------------------------------------------------------------------------------
-resource "azurerm_virtual_machine_data_disk_attachment" "target" {
-  managed_disk_id    = azurerm_managed_disk.target.id
-  virtual_machine_id = azurerm_virtual_machine.target.id
+resource "azurerm_virtual_machine_data_disk_attachment" "private" {
+  managed_disk_id    = azurerm_managed_disk.private.id
+  virtual_machine_id = azurerm_virtual_machine.private.id
   lun                = "10"
   caching            = "ReadWrite"
 }

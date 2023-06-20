@@ -9,7 +9,7 @@ resource "azurerm_private_endpoint" "storage" {
   name                          = "storage-endpoint"
   location                      = var.resource_group_location
   resource_group_name           = var.resource_group_name
-  subnet_id                     = azurerm_subnet.target.id
+  subnet_id                     = azurerm_subnet.private.id
   custom_network_interface_name = "storage-endpoint-nic"
 
   private_service_connection {
@@ -46,7 +46,7 @@ resource "azurerm_private_endpoint" "storagesync" {
   name                          = "storagesync-endpoint"
   location                      = var.resource_group_location
   resource_group_name           = var.resource_group_name
-  subnet_id                     = azurerm_subnet.target.id
+  subnet_id                     = azurerm_subnet.private.id
   custom_network_interface_name = "storagesync-endpoint-nic"
 
   private_service_connection {
@@ -59,7 +59,7 @@ resource "azurerm_private_endpoint" "storagesync" {
   private_dns_zone_group {
     name = "default"
     private_dns_zone_ids = [
-      azurerm_private_dns_zone.file.id
+      azurerm_private_dns_zone.afs.id
     ]
   }
 }

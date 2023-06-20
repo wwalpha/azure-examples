@@ -1,7 +1,8 @@
 resource "azurerm_storage_sync" "this" {
-  name                = "fileSync-${var.suffix}"
-  resource_group_name = var.resource_group_name
-  location            = var.resource_group_location
+  name                    = "fileSync-${var.suffix}"
+  resource_group_name     = var.resource_group_name
+  location                = var.resource_group_location
+  incoming_traffic_policy = "AllowVirtualNetworksOnly"
 }
 
 resource "azurerm_storage_sync_group" "this" {
