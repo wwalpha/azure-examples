@@ -1,4 +1,6 @@
 # ----------------------------------------------------------------------------------------------
 # Azure Client Config
 # ----------------------------------------------------------------------------------------------
-data "azurerm_client_config" "this" {}
+# data "azuread_application" "this" {
+#   display_name = "Microsoft.StorageSync"
+# }
