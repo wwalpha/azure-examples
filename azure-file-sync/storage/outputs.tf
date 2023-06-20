@@ -14,6 +14,10 @@ output "sa_container_name" {
   value = azurerm_storage_container.this.name
 }
 
-output "sa_share_name" {
-  value = azurerm_storage_share.this.name
+output "sa_public_share_name" {
+  value = azurerm_storage_share.public.name
+}
+
+output "sa_private_share_name" {
+  value = azurerm_storage_share.private.name
 }

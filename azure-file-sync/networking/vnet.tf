@@ -84,6 +84,7 @@ resource "azurerm_subnet" "vpn_gateway" {
 # Azure Virtual Network Peering - Public to VPN Peering
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_virtual_network_peering" "public_vpn_peer" {
+  depends_on                   = [azurerm_virtual_network.vpn, azurerm_virtual_network.public]
   name                         = "public-vpn-peer"
   resource_group_name          = var.resource_group_name
   virtual_network_name         = azurerm_virtual_network.public.name
@@ -98,6 +99,7 @@ resource "azurerm_virtual_network_peering" "public_vpn_peer" {
 # Azure Virtual Network Peering - VPN to Public Peering
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_virtual_network_peering" "vpn_public_peer" {
+  depends_on                   = [azurerm_virtual_network.vpn, azurerm_virtual_network.public]
   name                         = "vpn-public-peer"
   resource_group_name          = var.resource_group_name
   virtual_network_name         = azurerm_virtual_network.vpn.name
@@ -108,30 +110,32 @@ resource "azurerm_virtual_network_peering" "vpn_public_peer" {
   use_remote_gateways          = false
 }
 
-# ----------------------------------------------------------------------------------------------
-# Azure Virtual Network Peering - Private VPN Peering
-# ----------------------------------------------------------------------------------------------
-resource "azurerm_virtual_network_peering" "private_vpn_peer" {
-  name                         = "private-vpn-peer"
-  resource_group_name          = var.resource_group_name
-  virtual_network_name         = azurerm_virtual_network.private.name
-  remote_virtual_network_id    = azurerm_virtual_network.vpn.id
-  allow_virtual_network_access = true
-  allow_forwarded_traffic      = true
-  allow_gateway_transit        = false
-  use_remote_gateways          = true
-}
+# # ----------------------------------------------------------------------------------------------
+# # Azure Virtual Network Peering - Private VPN Peering
+# # ----------------------------------------------------------------------------------------------
+# resource "azurerm_virtual_network_peering" "private_vpn_peer" {
+#   depends_on                   = [azurerm_virtual_network.vpn, azurerm_virtual_network.private]
+#   name                         = "private-vpn-peer"
+#   resource_group_name          = var.resource_group_name
+#   virtual_network_name         = azurerm_virtual_network.private.name
+#   remote_virtual_network_id    = azurerm_virtual_network.vpn.id
+#   allow_virtual_network_access = true
+#   allow_forwarded_traffic      = true
+#   allow_gateway_transit        = false
+#   use_remote_gateways          = true
+# }
 
-# ----------------------------------------------------------------------------------------------
-# Azure Virtual Network Peering - VPN to Private Peering
-# ----------------------------------------------------------------------------------------------
-resource "azurerm_virtual_network_peering" "vpn_private_peer" {
-  name                         = "vpn-private-peer"
-  resource_group_name          = var.resource_group_name
-  virtual_network_name         = azurerm_virtual_network.vpn.name
-  remote_virtual_network_id    = azurerm_virtual_network.private.id
-  allow_virtual_network_access = true
-  allow_forwarded_traffic      = true
-  allow_gateway_transit        = true
-  use_remote_gateways          = false
-}
+# # ----------------------------------------------------------------------------------------------
+# # Azure Virtual Network Peering - VPN to Private Peering
+# # ----------------------------------------------------------------------------------------------
+# resource "azurerm_virtual_network_peering" "vpn_private_peer" {
+#   depends_on                   = [azurerm_virtual_network.vpn, azurerm_virtual_network.private]
+#   name                         = "vpn-private-peer"
+#   resource_group_name          = var.resource_group_name
+#   virtual_network_name         = azurerm_virtual_network.vpn.name
+#   remote_virtual_network_id    = azurerm_virtual_network.private.id
+#   allow_virtual_network_access = true
+#   allow_forwarded_traffic      = true
+#   allow_gateway_transit        = true
+#   use_remote_gateways          = false
+# }
