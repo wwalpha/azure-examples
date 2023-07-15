@@ -21,7 +21,7 @@ resource "azurerm_storage_sync_group" "this" {
 resource "azurerm_storage_sync_cloud_endpoint" "this" {
   name                      = "filesync-ce-${var.suffix}"
   storage_sync_group_id     = azurerm_storage_sync_group.this.id
-  file_share_name           = azurerm_storage_share.public.name
+  file_share_name           = azurerm_storage_share.this.name
   storage_account_id        = azurerm_storage_account.this.id
   storage_account_tenant_id = var.tenant_id
 }

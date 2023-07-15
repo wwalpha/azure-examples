@@ -36,31 +36,11 @@ module "storage" {
   resource_group_location = azurerm_resource_group.this.location
 }
 
-# module "security" {
-#   source = "./security"
-# }
+module "computing" {
+  source = "./computing"
 
-# module "networking" {
-#   depends_on = [module.storage]
-#   source     = "./networking"
-
-#   suffix                  = local.suffix
-#   tenant_id               = local.tenant_id
-#   resource_group_name     = azurerm_resource_group.this.name
-#   resource_group_location = azurerm_resource_group.this.location
-#   storage_account_id      = module.storage.storage_account_id
-#   storage_sync_id_private = module.storage.storage_sync_id_private
-# }
-
-# module "computing" {
-#   source = "./computing"
-
-#   suffix                  = local.suffix
-#   resource_group_name     = azurerm_resource_group.this.name
-#   resource_group_location = azurerm_resource_group.this.location
-#   azurevm_admin_username  = var.azurevm_admin_username
-#   azurevm_admin_password  = var.azurevm_admin_password
-#   public_subnet_id        = module.networking.public_subnet_id
-#   private_subnet_id       = module.networking.private_subnet_id
-#   identity_id             = module.security.container_instance_contributor_role_id
-# }
+  suffix                  = local.suffix
+  resource_group_name     = azurerm_resource_group.this.name
+  resource_group_location = azurerm_resource_group.this.location
+  storage_account_id      = module.storage.storage_account_id
+}

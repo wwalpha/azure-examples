@@ -2,7 +2,7 @@
 # Azure Storage Account
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_storage_account" "this" {
-  name                          = "sa-${var.suffix}"
+  name                          = "storage${var.suffix}"
   resource_group_name           = var.resource_group_name
   location                      = var.resource_group_location
   account_tier                  = "Standard"
@@ -15,11 +15,11 @@ resource "azurerm_storage_account" "this" {
 # ----------------------------------------------------------------------------------------------
 # Azure Storage Share
 # ----------------------------------------------------------------------------------------------
-resource "azurerm_storage_share" "public" {
-  name                 = "public"
+resource "azurerm_storage_share" "this" {
+  name                 = "share"
   storage_account_name = azurerm_storage_account.this.name
-  access_tier          = "TransactionOptimized"
-  quota                = 512
+  access_tier          = "Hot"
+  quota                = 50
   acl {
     id = "GhostedRecall"
     access_policy {
@@ -34,14 +34,14 @@ resource "azurerm_storage_share" "public" {
 resource "azurerm_storage_container" "this" {
   name                  = "content"
   storage_account_name  = azurerm_storage_account.this.name
-  container_access_type = "private"
+  container_access_type = "container"
 }
 
-# # ----------------------------------------------------------------------------------------------
-# # Azure Role Assignment
-# # ----------------------------------------------------------------------------------------------
-# resource "azurerm_role_assignment" "this" {
-#   scope                = azurerm_storage_account.this.id
-#   role_definition_name = "Reader and Data Access"
-#   principal_id         = "aebe95d6-843e-4ca9-8dd5-f59e313426ec"
-# }
+# ----------------------------------------------------------------------------------------------
+# Azure Role Assignment
+# ----------------------------------------------------------------------------------------------
+resource "azurerm_role_assignment" "this" {
+  scope                = azurerm_storage_account.this.id
+  role_definition_name = "Reader and Data Access"
+  principal_id         = "aebe95d6-843e-4ca9-8dd5-f59e313426ec"
+}
