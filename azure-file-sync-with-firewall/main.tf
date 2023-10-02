@@ -68,7 +68,6 @@ module "computing" {
   resource_group_location = azurerm_resource_group.this.location
   azurevm_admin_username  = var.azurevm_admin_username
   azurevm_admin_password  = var.azurevm_admin_password
-  public_subnet_id        = module.networking.public_subnet_id
   private_subnet_id       = module.networking.private_subnet_id
   identity_id             = module.security.container_instance_contributor_role_id
 }

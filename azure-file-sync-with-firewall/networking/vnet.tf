@@ -1,25 +1,4 @@
 # ----------------------------------------------------------------------------------------------
-# Azure Virtual Network - Public(Internet)
-# ----------------------------------------------------------------------------------------------
-resource "azurerm_virtual_network" "public" {
-  name                = "vnet-public-${var.suffix}"
-  location            = var.resource_group_location
-  resource_group_name = var.resource_group_name
-  address_space       = ["10.1.0.0/16"]
-}
-
-# ----------------------------------------------------------------------------------------------
-# Azure Subnet - Public(Internet)
-# ----------------------------------------------------------------------------------------------
-resource "azurerm_subnet" "public" {
-  name                 = "PublicSubnet-${var.suffix}"
-  resource_group_name  = var.resource_group_name
-  virtual_network_name = azurerm_virtual_network.public.name
-  address_prefixes     = ["10.1.1.0/24"]
-  service_endpoints    = ["Microsoft.Storage"]
-}
-
-# ----------------------------------------------------------------------------------------------
 # Azure Virtual Network - Private
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_virtual_network" "private" {
@@ -58,36 +37,6 @@ resource "azurerm_subnet" "vpn_gateway" {
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vpn.name
   address_prefixes     = ["10.0.0.0/24"]
-}
-
-# ----------------------------------------------------------------------------------------------
-# Azure Virtual Network Peering - Public to VPN Peering
-# ----------------------------------------------------------------------------------------------
-resource "azurerm_virtual_network_peering" "public_vpn_peer" {
-  depends_on                   = [azurerm_virtual_network.vpn, azurerm_virtual_network.public, azurerm_virtual_network_gateway.this]
-  name                         = "public-vpn-peer"
-  resource_group_name          = var.resource_group_name
-  virtual_network_name         = azurerm_virtual_network.public.name
-  remote_virtual_network_id    = azurerm_virtual_network.vpn.id
-  allow_virtual_network_access = true
-  allow_forwarded_traffic      = true
-  allow_gateway_transit        = false
-  use_remote_gateways          = true
-}
-
-# ----------------------------------------------------------------------------------------------
-# Azure Virtual Network Peering - VPN to Public Peering
-# ----------------------------------------------------------------------------------------------
-resource "azurerm_virtual_network_peering" "vpn_public_peer" {
-  depends_on                   = [azurerm_virtual_network.vpn, azurerm_virtual_network.public, azurerm_virtual_network_gateway.this]
-  name                         = "vpn-public-peer"
-  resource_group_name          = var.resource_group_name
-  virtual_network_name         = azurerm_virtual_network.vpn.name
-  remote_virtual_network_id    = azurerm_virtual_network.public.id
-  allow_virtual_network_access = true
-  allow_forwarded_traffic      = true
-  allow_gateway_transit        = true
-  use_remote_gateways          = false
 }
 
 # ----------------------------------------------------------------------------------------------
