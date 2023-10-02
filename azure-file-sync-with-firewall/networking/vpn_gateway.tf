@@ -26,7 +26,7 @@ resource "azurerm_virtual_network_gateway" "this" {
 
   vpn_client_configuration {
     address_space        = ["172.168.0.0/24"]
-    vpn_auth_types       = ["Certificate"]
+    vpn_auth_types       = ["AAD"]
     vpn_client_protocols = ["OpenVPN"]
 
     aad_tenant   = "https://login.microsoftonline.com/${var.tenant_id}"

@@ -35,6 +35,12 @@ resource "azurerm_resource_group" "this" {
   location   = var.resource_group_location
 }
 
+resource "azurerm_role_assignment" "rg_contributor" {
+  scope                = azurerm_resource_group.this.id
+  role_definition_name = "Contributor"
+  principal_id         = var.resource_contributor_object_id
+}
+
 module "storage" {
   source = "./storage"
 
@@ -69,5 +75,4 @@ module "computing" {
   azurevm_admin_username  = var.azurevm_admin_username
   azurevm_admin_password  = var.azurevm_admin_password
   private_subnet_id       = module.networking.private_subnet_id
-  identity_id             = module.security.container_instance_contributor_role_id
 }

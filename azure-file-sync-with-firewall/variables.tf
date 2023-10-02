@@ -10,3 +10,6 @@ variable "azurevm_admin_username" {}
 
 variable "azurevm_admin_password" {}
 
+variable "resource_contributor_object_id" {
+  default = "84539555-a8d4-4c9f-9a2b-f4aecf4bdfaf"
+}

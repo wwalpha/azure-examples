@@ -10,4 +10,4 @@ variable "azurevm_admin_password" {}
 
 variable "suffix" {}
 
-variable "identity_id" {}
+# variable "identity_id" {}
