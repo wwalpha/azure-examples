@@ -34,11 +34,11 @@ resource "azurerm_virtual_network_gateway" "this" {
 # Local Network Gateway - Site to Site VPN
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_local_network_gateway" "this" {
-  count               = var.aws_virtual_private_gateway == "" ? 0 : 1
+  count               = var.aws_virtual_private_gateway_public_ip == "" ? 0 : 1
   name                = "aws-vpgw-${local.suffix}"
   location            = azurerm_resource_group.this.location
   resource_group_name = azurerm_resource_group.this.name
-  gateway_address     = var.aws_virtual_private_gateway
+  gateway_address     = var.aws_virtual_private_gateway_public_ip
   address_space       = [var.aws_address_spaces]
 }
 
@@ -46,7 +46,7 @@ resource "azurerm_local_network_gateway" "this" {
 # Local Network Gateway - Site to Site VPN
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_virtual_network_gateway_connection" "this" {
-  count                      = var.aws_virtual_private_gateway == "" ? 0 : 1
+  count                      = var.aws_virtual_private_gateway_public_ip == "" ? 0 : 1
   depends_on                 = [azurerm_local_network_gateway.this, azurerm_virtual_network_gateway.this]
   name                       = "aws-s2s-azure-${local.suffix}"
   location                   = azurerm_resource_group.this.location

@@ -9,7 +9,7 @@ variable "resource_group_location" {
 variable "pre_shared_key" {
 }
 
-variable "aws_virtual_private_gateway" {
+variable "aws_virtual_private_gateway_public_ip" {
 }
 
 variable "aws_address_spaces" {
