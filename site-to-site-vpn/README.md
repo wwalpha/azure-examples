@@ -13,14 +13,14 @@ export ARM_TENANT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```sh
 $ terraform apply -auto-approve
 var.aws_virtual_private_gateway_public_ip
-Enter a value:   (Enter)
+  Enter a value:   (Enter)
 
 var.pre_shared_key
   Enter a value:    (Enter)
 
 Outputs:
 
-vpn_gateway_public_ip = "172.207.236.208"
+azure_vpn_gateway_public_ip = "172.207.236.208"
 ```
 
 
@@ -28,12 +28,12 @@ vpn_gateway_public_ip = "172.207.236.208"
 ```sh
 $ terraform apply -auto-approve
 var.aws_virtual_private_gateway_public_ip
-Enter a value:   (Enter)
+  Enter a value: xxx.xxx.xxx.xxx (get from aws)  (Enter)
 
 var.pre_shared_key
-  Enter a value:    (Enter)
+  Enter a value: xxxxxxxxxxxx (get from aws)  (Enter)
 
 Outputs:
 
-vpn_gateway_public_ip = "172.207.236.208"
+azure_vpn_gateway_public_ip = "172.207.236.208"
 ```
