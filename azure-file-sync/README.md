@@ -9,7 +9,6 @@
 - On the Properties subpane, select the link for IE Enhanced Security Configuration.
 - In the Internet Explorer Enhanced Security Configuration dialog box, select Off for Administrators and Users
 
-
 3. Register server
 You would need to create a custom role where you list the administrators that are only allowed to register servers and give your custom role the following permissions
 
@@ -57,4 +56,29 @@ Get-StorageSyncNetworkLimit | ForEach-Object { Remove-StorageSyncNetworkLimit -I
 
 // To delete an individual bandwidth limit schedule
 Get-StorageSyncNetworkLimit | Where Id -eq "{idnumber}" | Remove-StorageSyncNetworkLimit
+```
+
+9. Configuring DNS forwarding for Azure Files
+```
+Resolve-DnsName -Name storageaccount.file.core.windows.net
+Resolve-DnsName -Name storagesync.japaneast.afs.azure.net
+
+Name                              Type   TTL   Section    NameHost
+----                              ----   ---   -------    --------
+storageaccount.file.core.windows. CNAME  29    Answer     csostoracct.privatelink.file.core.windows.net
+net
+
+Name       : storageaccount.privatelink.file.core.windows.net
+QueryType  : A
+TTL        : 1769
+Section    : Answer
+IP4Address : 192.168.0.4 <<<
+
+Test-NetConnection -ComputerName storageaccount.file.core.windows.net -CommonTCPPort SMB
+```
+
+10. Reset Azure File Sync Agent Settings
+```
+Import-Module "C:\Program Files\Azure\StorageSyncAgent\StorageSync.Management.ServerCmdlets.dll"
+Reset-StorageSyncServer
 ```
