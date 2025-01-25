@@ -9,7 +9,10 @@ export ARM_TENANT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ## Architecture
 
 
-## Execution
+
+### Step1
+Azure 側の初期構築を実行します。パラメータシートは空欄です。
+
 ```sh
 $ terraform apply -auto-approve
 var.aws_virtual_private_gateway_public_ip
@@ -23,8 +26,16 @@ Outputs:
 azure_vpn_gateway_public_ip = "172.207.236.208"
 ```
 
+### Step2
+AWS の Site to Site Connection の設定ファイルをダウンロードします。
+Vendor: Generic
+Platform: Generic
+Software: Vendor Agnostic
+IKE Version: ikev2
 
-## Execution
+### Step3
+設定ファイルの `Virtual Private Gateway IP` と `Pre-Shared Key` を利用し、コマンドを再実行します。
+
 ```sh
 $ terraform apply -auto-approve
 var.aws_virtual_private_gateway_public_ip

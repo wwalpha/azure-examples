@@ -38,6 +38,12 @@ You would need to create a custom role where you list the administrators that ar
 
 8. Add automation account schedule to execute runbook
 
+## Unregistration from server list (reset agent configs)
+```
+Import-Module "C:\Program Files\Azure\StorageSyncAgent\StorageSync.Management.ServerCmdlets.dll"
+Reset-StorageSyncServer
+```
+
 ## How to limit Azure File Sync bandwidth via PowerShell
 ```
 Import-Module 'C:\Program Files\Azure\StorageSyncAgent\StorageSync.Management.ServerCmdlets.dll'
