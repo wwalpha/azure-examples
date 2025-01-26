@@ -16,7 +16,6 @@ resource "azurerm_application_gateway" "this" {
   name                = "AppGateway-${local.suffix}"
   location            = azurerm_resource_group.this.location
   resource_group_name = azurerm_resource_group.this.name
-  zones               = [1, 2]
 
   sku {
     name     = "Standard_v2"
