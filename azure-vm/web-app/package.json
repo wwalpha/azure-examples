@@ -1,0 +1,10 @@
+{
+  "name": "web-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "terraform apply -auto-approve",
+    "destroy": "terraform destroy -auto-approve"
+  }
+}
