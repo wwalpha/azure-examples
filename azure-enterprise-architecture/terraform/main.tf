@@ -28,3 +28,25 @@ provider "azurerm" {
 provider "azuread" {
   use_msi = true
 }
+
+module "Connectivity" {
+  source = "./Connectivity"
+
+  suffix = local.suffix
+}
+
+module "LandingZone1" {
+  source = "./LandingZone1"
+
+  suffix         = local.suffix
+  vnet_address   = "10.10.1.0/24"
+  subnet_address = ["10.10.1.0/25", "10.10.1.128/25"]
+}
+
+module "LandingZone2" {
+  source = "./LandingZone2"
+
+  suffix         = local.suffix
+  vnet_address   = "10.10.2.0/24"
+  subnet_address = ["10.10.2.0/25", "10.10.2.128/25"]
+}

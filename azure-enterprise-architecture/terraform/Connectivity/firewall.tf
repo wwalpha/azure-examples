@@ -23,6 +23,23 @@ resource "azurerm_firewall" "this" {
     virtual_hub_id  = azurerm_virtual_hub.this.id
     public_ip_count = 2
   }
+
+  ip_configuration {
+    name                 = "configuration"
+    subnet_id            = azurerm_subnet.firewall.id
+    public_ip_address_id = azurerm_public_ip.firewall_pip.id
+  }
+}
+
+# ----------------------------------------------------------------------------------------------
+# Azure Public IP - Firewall
+# ----------------------------------------------------------------------------------------------
+resource "azurerm_public_ip" "firewall_pip" {
+  name                = "firewall-pip-${var.suffix}"
+  location            = azurerm_resource_group.this.location
+  resource_group_name = azurerm_resource_group.this.name
+  allocation_method   = "Static"
+  sku                 = "Standard"
 }
 
 resource "azurerm_firewall_policy_rule_collection_group" "dnat" {
@@ -57,41 +74,41 @@ resource "azurerm_firewall_policy_rule_collection_group" "network" {
   }
 }
 
-resource "azurerm_firewall_policy_rule_collection_group" "application" {
-  name               = "DefaultApplicationRuleCollectionGroup"
-  firewall_policy_id = azurerm_firewall_policy.this.id
-  priority           = 3000
+# resource "azurerm_firewall_policy_rule_collection_group" "application" {
+#   name               = "DefaultApplicationRuleCollectionGroup"
+#   firewall_policy_id = azurerm_firewall_policy.this.id
+#   priority           = 3000
 
-  application_rule_collection {
-    name     = "DenyRules"
-    priority = 1000
-    action   = "Deny"
+#   application_rule_collection {
+#     name     = "DenyRules"
+#     priority = 1000
+#     action   = "Deny"
 
-    rule {
-      name = "deny_microsoft"
-      protocols {
-        type = "Https"
-        port = 443
-      }
-      source_addresses  = azurerm_subnet.app.address_prefixes
-      destination_fqdns = ["*.microsoft.com"]
-    }
-  }
+#     rule {
+#       name = "deny_microsoft"
+#       protocols {
+#         type = "Https"
+#         port = 443
+#       }
+#       source_addresses  = azurerm_subnet.app.address_prefixes
+#       destination_fqdns = ["*.microsoft.com"]
+#     }
+#   }
 
-  application_rule_collection {
-    name     = "AllowRules"
-    priority = 2000
-    action   = "Allow"
+#   application_rule_collection {
+#     name     = "AllowRules"
+#     priority = 2000
+#     action   = "Allow"
 
-    rule {
-      name = "allow_google"
-      protocols {
-        type = "Https"
-        port = 443
-      }
-      source_addresses  = azurerm_subnet.app.address_prefixes
-      destination_fqdns = ["www.google.com"]
-    }
-  }
-}
+#     rule {
+#       name = "allow_google"
+#       protocols {
+#         type = "Https"
+#         port = 443
+#       }
+#       source_addresses  = azurerm_subnet.app.address_prefixes
+#       destination_fqdns = ["www.google.com"]
+#     }
+#   }
+# }
 
