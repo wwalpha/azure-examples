@@ -32,7 +32,11 @@ provider "azuread" {
 module "Connectivity" {
   source = "./Connectivity"
 
-  suffix = local.suffix
+  suffix                  = local.suffix
+  vhub_address_prefix     = "10.20.0.0/23"
+  vnet_address            = "10.10.0.0/16"
+  subnet_address_firewall = "10.10.1.0/24"
+  subnet_address_gateway  = "10.10.2.0/24"
 }
 
 module "LandingZone1" {

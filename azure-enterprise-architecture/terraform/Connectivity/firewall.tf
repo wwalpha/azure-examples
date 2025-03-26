@@ -12,6 +12,7 @@ resource "azurerm_firewall_policy" "this" {
 # Azure Firewall
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_firewall" "this" {
+  depends_on          = [azurerm_virtual_hub.this, azurerm_public_ip.firewall_pip]
   name                = "fw-central-${var.suffix}"
   location            = azurerm_resource_group.this.location
   resource_group_name = azurerm_resource_group.this.name

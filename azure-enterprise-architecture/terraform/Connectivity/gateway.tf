@@ -14,7 +14,7 @@ resource "azurerm_virtual_network_gateway" "connectivity_vpn_gateway" {
   ip_configuration {
     name                 = "vpn-gateway-config"
     public_ip_address_id = azurerm_public_ip.connectivity_vpn_gateway_pip.id
-    subnet_id            = azurerm_subnet.gateway_subnet.id
+    subnet_id            = azurerm_subnet.gateway.id
   }
 }
 

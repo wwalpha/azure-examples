@@ -18,6 +18,7 @@ resource "azurerm_virtual_hub" "this" {
   location            = azurerm_resource_group.this.location
   virtual_wan_id      = azurerm_virtual_wan.this.id
   sku                 = "Standard"
+  address_prefix      = var.vhub_address_prefix
 }
 
 # ----------------------------------------------------------------------------------------------
