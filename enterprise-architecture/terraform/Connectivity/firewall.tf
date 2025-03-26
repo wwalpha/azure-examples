@@ -41,18 +41,27 @@ resource "azurerm_firewall_policy_rule_collection_group" "dnat" {
   name               = "DefaultDnatRuleCollectionGroup"
   firewall_policy_id = azurerm_firewall_policy.this.id
   priority           = 1000
+
+  # nat_rule_collection {
+  #   name     = "AllowRDPFromInternet"
+  #   action   = "Allow"
+  #   priority = 1001
+
+  #   rule {
+  #     name               = "AllowRDP"
+  #     translated_address = azurerm_subnet.app.address_prefixes[0]
+  #     translated_port    = 3389
+  #     source_addresses   = ["*"]
+  #     destination_ports  = ["3389"]
+  #     protocols          = ["TCP"]
+  #   }
+  # }
 }
 
 resource "azurerm_firewall_policy_rule_collection_group" "network" {
   name               = "DefaultNetworkRuleCollectionGroup"
   firewall_policy_id = azurerm_firewall_policy.this.id
   priority           = 2000
-
-  # network_rule_collection {
-  #   name     = "DenyRules"
-  #   priority = 1000
-  #   action   = "Deny"
-  # }
 
   network_rule_collection {
     name     = "AllowRules"
@@ -68,6 +77,13 @@ resource "azurerm_firewall_policy_rule_collection_group" "network" {
     }
   }
 }
+
+resource "azurerm_firewall_policy_rule_collection_group" "dnat" {
+  name               = "DNATRules"
+  firewall_policy_id = azurerm_firewall_policy.this.id
+  priority           = 1000
+}
+
 
 # resource "azurerm_firewall_policy_rule_collection_group" "application" {
 #   name               = "DefaultApplicationRuleCollectionGroup"

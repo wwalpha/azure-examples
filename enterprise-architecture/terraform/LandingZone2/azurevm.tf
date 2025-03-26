@@ -8,7 +8,7 @@ resource "azurerm_network_interface" "this" {
 
   ip_configuration {
     name                          = "server01nic-ipconfig"
-    subnet_id                     = azurerm_subnet.this.id
+    subnet_id                     = azurerm_subnet.this[0].id
     private_ip_address_allocation = "Dynamic"
   }
 }
@@ -22,7 +22,7 @@ resource "azurerm_linux_virtual_machine" "this" {
   location                        = azurerm_resource_group.this.location
   size                            = "Standard_B2s"
   admin_username                  = "azureuser"
-  admin_password                  = random_password.password.result
+  admin_password                  = var.vm_password
   disable_password_authentication = false
 
   network_interface_ids = [

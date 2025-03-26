@@ -2,7 +2,7 @@
 # Azure Virtual Network
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_virtual_network" "this" {
-  name                = "vnet-spoke1-${var.suffix}"
+  name                = "vnet-spoke2-${var.suffix}"
   location            = azurerm_resource_group.this.location
   resource_group_name = azurerm_resource_group.this.name
   address_space       = [var.vnet_address]
@@ -23,8 +23,25 @@ resource "azurerm_subnet" "this" {
 # Azure Virtual Hub Connection
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_virtual_hub_connection" "this" {
-  name                      = "landingzone1-to-hub"
+  name                      = "landingzone2-to-hub"
   virtual_hub_id            = var.virtual_hub_id
   remote_virtual_network_id = azurerm_virtual_network.this.id
   internet_security_enabled = true
+}
+
+# ----------------------------------------------------------------------------------------------
+# Azure Virtual Hub Route Table
+# ----------------------------------------------------------------------------------------------
+resource "azurerm_virtual_hub_route_table" "this" {
+  name           = "vhubrt2-${var.suffix}"
+  virtual_hub_id = var.virtual_hub_id
+  labels         = ["VNet"]
+
+  route {
+    name              = "route-to-vnet"
+    destinations_type = "CIDR"
+    destinations      = ["10.10.0.0/16"]
+    next_hop_type     = "ResourceId"
+    next_hop          = azurerm_virtual_hub_connection.this.id
+  }
 }

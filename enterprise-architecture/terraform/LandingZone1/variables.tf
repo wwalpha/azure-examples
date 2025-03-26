@@ -18,3 +18,7 @@ variable "subnet_address" {
 variable "virtual_hub_id" {
   type = string
 }
+
+variable "vm_password" {
+  type = string
+}

@@ -46,6 +46,7 @@ module "LandingZone1" {
   virtual_hub_id = module.Connectivity.virtual_hub_id
   vnet_address   = "10.10.1.0/24"
   subnet_address = ["10.10.1.0/25", "10.10.1.128/25"]
+  vm_password    = local.vm_password
 }
 
 module "LandingZone2" {
@@ -55,4 +56,5 @@ module "LandingZone2" {
   virtual_hub_id = module.Connectivity.virtual_hub_id
   vnet_address   = "10.10.2.0/24"
   subnet_address = ["10.10.2.0/25", "10.10.2.128/25"]
+  vm_password    = local.vm_password
 }

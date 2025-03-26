@@ -1,8 +1,7 @@
 locals {
-  suffix    = random_id.this.hex
-  tenant_id = data.azurerm_client_config.this.tenant_id
-
-
+  suffix      = random_id.this.hex
+  tenant_id   = data.azurerm_client_config.this.tenant_id
+  vm_password = random_password.password.result
 }
 
 resource "random_id" "this" {
