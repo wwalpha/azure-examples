@@ -14,3 +14,7 @@ variable "vnet_address" {
 variable "subnet_address" {
   type = list(string)
 }
+
+variable "virtual_hub_id" {
+  type = string
+}

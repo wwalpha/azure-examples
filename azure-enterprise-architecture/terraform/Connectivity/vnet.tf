@@ -11,15 +11,15 @@ resource "azurerm_virtual_network" "this" {
 # ----------------------------------------------------------------------------------------------
 # Azure Subnet - AzureFirewallSubnet
 # ----------------------------------------------------------------------------------------------
-resource "azurerm_subnet" "firewall" {
-  name                 = "AzureFirewallSubnet"
-  resource_group_name  = azurerm_resource_group.this.name
-  virtual_network_name = azurerm_virtual_network.this.name
-  address_prefixes     = [var.subnet_address_firewall]
-}
+# resource "azurerm_subnet" "firewall" {
+#   name                 = "AzureFirewallSubnet"
+#   resource_group_name  = azurerm_resource_group.this.name
+#   virtual_network_name = azurerm_virtual_network.this.name
+#   address_prefixes     = [var.subnet_address_firewall]
+# }
 
 # ----------------------------------------------------------------------------------------------
-# Azure Subnet - AzureFirewallSubnet
+# Azure Subnet - GatewaySubnet
 # ----------------------------------------------------------------------------------------------
 resource "azurerm_subnet" "gateway" {
   name                 = "GatewaySubnet"

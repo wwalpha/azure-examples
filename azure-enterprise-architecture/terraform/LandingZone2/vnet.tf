@@ -18,3 +18,13 @@ resource "azurerm_subnet" "this" {
   virtual_network_name = azurerm_virtual_network.this.name
   address_prefixes     = [var.subnet_address[count.index]]
 }
+
+# ----------------------------------------------------------------------------------------------
+# Azure Virtual Hub Connection
+# ----------------------------------------------------------------------------------------------
+resource "azurerm_virtual_hub_connection" "this" {
+  name                      = "landingzone1-to-hub"
+  virtual_hub_id            = var.virtual_hub_id
+  remote_virtual_network_id = azurerm_virtual_network.this.id
+  internet_security_enabled = true
+}
