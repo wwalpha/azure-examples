@@ -7,16 +7,20 @@ variable "resource_group_location" {
   default = "Japan East"
 }
 
+variable "virtual_hub_id" {
+  type = string
+}
+
+variable "firewall_id" {
+  type = string
+}
+
 variable "vnet_address" {
   type = string
 }
 
 variable "subnet_address" {
   type = list(string)
-}
-
-variable "virtual_hub_id" {
-  type = string
 }
 
 variable "vm_password" {

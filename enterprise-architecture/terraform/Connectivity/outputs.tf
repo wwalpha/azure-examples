@@ -13,6 +13,13 @@ output "virtual_hub_id" {
 }
 
 # ----------------------------------------------------------------------------------------------
+# Azure Firewall ID
+# ----------------------------------------------------------------------------------------------
+output "firewall_id" {
+  value = azurerm_firewall.this.id
+}
+
+# ----------------------------------------------------------------------------------------------
 # Azure Firewall Name
 # ----------------------------------------------------------------------------------------------
 output "firewall_name" {
@@ -20,24 +27,10 @@ output "firewall_name" {
 }
 
 # ----------------------------------------------------------------------------------------------
-# Firewall policy rule collection group name - DNAT
+# Azure Firewall Policy Name
 # ----------------------------------------------------------------------------------------------
-output "firewall_policy_rule_collection_group_name_nat" {
-  value = azurerm_firewall_policy_rule_collection_group.nat.name
-}
-
-# ----------------------------------------------------------------------------------------------
-# Firewall policy rule collection group name - Network
-# ----------------------------------------------------------------------------------------------
-output "firewall_policy_rule_collection_group_name_network" {
-  value = azurerm_firewall_policy_rule_collection_group.network.name
-}
-
-# ----------------------------------------------------------------------------------------------
-# Firewall policy rule collection group name - Application
-# ----------------------------------------------------------------------------------------------
-output "firewall_policy_rule_collection_group_name_application" {
-  value = azurerm_firewall_policy_rule_collection_group.network.name
+output "firewall_policy_id" {
+  value = azurerm_firewall_policy.this.id
 }
 
 # ----------------------------------------------------------------------------------------------

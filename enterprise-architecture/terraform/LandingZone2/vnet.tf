@@ -27,6 +27,15 @@ resource "azurerm_virtual_hub_connection" "this" {
   virtual_hub_id            = var.virtual_hub_id
   remote_virtual_network_id = azurerm_virtual_network.this.id
   internet_security_enabled = true
+
+  routing {
+    associated_route_table_id = azurerm_virtual_hub_route_table.this.id
+
+    propagated_route_table {
+      route_table_ids = [azurerm_virtual_hub_route_table.this.id]
+      labels          = ["VNet"]
+    }
+  }
 }
 
 # ----------------------------------------------------------------------------------------------
@@ -38,10 +47,19 @@ resource "azurerm_virtual_hub_route_table" "this" {
   labels         = ["VNet"]
 
   route {
-    name              = "route-to-vnet"
+    name              = "VNetToVNet"
     destinations_type = "CIDR"
     destinations      = ["10.10.0.0/16"]
     next_hop_type     = "ResourceId"
-    next_hop          = azurerm_virtual_hub_connection.this.id
+    next_hop          = var.firewall_id
+  }
+
+  route {
+    name              = "InternetToFirewall"
+    destinations_type = "CIDR"
+    destinations      = ["0.0.0.0/0"]
+    next_hop_type     = "ResourceId"
+    next_hop          = var.firewall_id
   }
 }
+
