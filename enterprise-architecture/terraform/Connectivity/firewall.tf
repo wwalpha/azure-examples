@@ -37,7 +37,7 @@ resource "azurerm_firewall" "this" {
 #   sku                 = "Standard"
 # }
 
-resource "azurerm_firewall_policy_rule_collection_group" "dnat" {
+resource "azurerm_firewall_policy_rule_collection_group" "nat" {
   name               = "DefaultDnatRuleCollectionGroup"
   firewall_policy_id = azurerm_firewall_policy.this.id
   priority           = 1000
@@ -78,48 +78,41 @@ resource "azurerm_firewall_policy_rule_collection_group" "network" {
   }
 }
 
-resource "azurerm_firewall_policy_rule_collection_group" "dnat" {
-  name               = "DNATRules"
+resource "azurerm_firewall_policy_rule_collection_group" "application" {
+  name               = "DefaultApplicationRuleCollectionGroup"
   firewall_policy_id = azurerm_firewall_policy.this.id
-  priority           = 1000
+  priority           = 3000
+
+  application_rule_collection {
+    name     = "DenyRules"
+    priority = 1000
+    action   = "Deny"
+
+    rule {
+      name = "deny_microsoft"
+      protocols {
+        type = "Https"
+        port = 443
+      }
+      source_addresses  = ["10.10.0.0/16"]
+      destination_fqdns = ["*.microsoft.com"]
+    }
+  }
+
+  application_rule_collection {
+    name     = "AllowRules"
+    priority = 2000
+    action   = "Allow"
+
+    rule {
+      name = "allow_google"
+      protocols {
+        type = "Https"
+        port = 443
+      }
+      source_addresses  = ["10.10.0.0/16"]
+      destination_fqdns = ["www.google.com"]
+    }
+  }
 }
-
-
-# resource "azurerm_firewall_policy_rule_collection_group" "application" {
-#   name               = "DefaultApplicationRuleCollectionGroup"
-#   firewall_policy_id = azurerm_firewall_policy.this.id
-#   priority           = 3000
-
-#   application_rule_collection {
-#     name     = "DenyRules"
-#     priority = 1000
-#     action   = "Deny"
-
-#     rule {
-#       name = "deny_microsoft"
-#       protocols {
-#         type = "Https"
-#         port = 443
-#       }
-#       source_addresses  = azurerm_subnet.app.address_prefixes
-#       destination_fqdns = ["*.microsoft.com"]
-#     }
-#   }
-
-#   application_rule_collection {
-#     name     = "AllowRules"
-#     priority = 2000
-#     action   = "Allow"
-
-#     rule {
-#       name = "allow_google"
-#       protocols {
-#         type = "Https"
-#         port = 443
-#       }
-#       source_addresses  = azurerm_subnet.app.address_prefixes
-#       destination_fqdns = ["www.google.com"]
-#     }
-#   }
-# }
 

@@ -6,7 +6,7 @@ output "vnet_id" {
 }
 
 # ----------------------------------------------------------------------------------------------
-# Azure VM Private IP Address - Server01
+# Azure VM Private IP Address - Server02
 # ----------------------------------------------------------------------------------------------
 output "azurevm_private_ip_address" {
   value = azurerm_network_interface.this.private_ip_address
