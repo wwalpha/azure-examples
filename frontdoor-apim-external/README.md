@@ -111,13 +111,7 @@ curl "[apim-gateway-url]/func/httpget?name=Test"
 
 ## 📋 重要な注意事項
 
-### 1. APIM Internal Configuration
-
-- APIManagementは内部VNet配置のため、外部からの直接アクセス不可
-- Front Door経由でのみアクセス可能
-- 管理ポータルへのアクセスには追加設定が必要
-
-### 2. Function Key管理
+### Function Key管理
 
 ```bash
 # Function Keyを取得してAPIMに設定
@@ -131,17 +125,6 @@ az apim nv update --service-name [apim-name] --resource-group [rg-name] --named-
 
 - Private DNS Zoneが自動作成されます
 - VNet内のリソースは自動的にプライベートエンドポイントを解決
-
-## 🔧 カスタマイズ
-
-### 本番環境向け設定
-
-```hcl
-# terraform.tfvars
-environment      = "prod"
-apim_sku_name    = "Premium_1"
-function_app_sku = "P2V3"  # Premium V3 - より高いパフォーマンス
-```
 
 ### Premium V3 SKU オプション
 
